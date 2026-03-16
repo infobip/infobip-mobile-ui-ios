@@ -8,12 +8,12 @@ Pod::Spec.new do |s|
     Consumers own all call logic and drive the shared UI through a clean, data-driven API.
   DESC
 
-  s.homepage         = 'https://git.ib-ci.com/scm/cma/infobip-mobile-ui-ios'
+  s.homepage         = 'https://github.com/infobip/infobip-mobile-ui-ios.git'
   s.license          = { :type => 'Infobip', :file => 'LICENSE' }
   s.author           = { 'Infobip' => 'mobile@infobip.com' }
-  s.source           = { :git => 'https://git.ib-ci.com/scm/cma/infobip-mobile-ui-ios.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/infobip/infobip-mobile-ui-ios.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '15.0'
   s.swift_version         = '5.0'
 
   # The Swift sources live in Sources/IBCallUI/ (folder name kept for historical reasons).
@@ -21,16 +21,5 @@ Pod::Spec.new do |s|
   s.source_files  = 'Sources/IBCallUI/**/*.swift'
   s.module_name   = 'InfobipMobileUI'
 
-  # Asset catalog and sound files bundled under the key 'InfobipMobileUI'.
-  # At runtime IBCallUIBundle resolves this as 'InfobipMobileUI.bundle'.
-  s.resource_bundles = {
-    'InfobipMobileUI' => ['Sources/IBCallUI/Resources/**']
-  }
-
   s.frameworks = 'UIKit', 'SwiftUI'
-
-  # Disable Bitcode (deprecated from Xcode 14, but keeps older setups happy).
-  s.pod_target_xcconfig = {
-    'ENABLE_BITCODE' => 'NO'
-  }
 end
