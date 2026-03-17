@@ -32,7 +32,7 @@ public struct IBCallButtonModel: Identifiable {
     public var onTap: () -> Void
 
     public init(
-        id: String = UUID().uuidString,
+        id: String,
         icon: Image,
         selectedIcon: Image? = nil,
         label: String? = nil,

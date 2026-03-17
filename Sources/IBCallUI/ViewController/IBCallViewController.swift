@@ -69,7 +69,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
         state: IBCallUIState,
         buttons: [IBCallButtonModel],
         configuration: IBCallUIConfiguration,
-        rendererFactory: @escaping (AnyObject) -> UIView = { _ in UIView() }
+        rendererFactory: @escaping (AnyObject) -> UIView
     ) {
         self.state = state
         self.buttonsState = IBButtonsState()

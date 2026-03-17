@@ -49,16 +49,16 @@ public struct IBCallUIConfiguration {
     // MARK: - Init
 
     public init(
-        backgroundColor: Color = Color(hex: "#242424"),
+        backgroundColor: Color = Color(ibMobileUIHex: "#242424"),
         foregroundColor: Color = .white,
-        textSecondaryColor: Color = Color(hex: "#5D5F61"),
-        sheetBackgroundColor: Color = Color(hex: "#242424"),
-        sheetDividerColor: Color = Color(hex: "#3B3B39"),
-        sheetDragIndicatorColor: Color = Color(hex: "#5D5F61"),
-        buttonColor: Color = Color(hex: "#5D5F61"),
+        textSecondaryColor: Color = Color(ibMobileUIHex: "#5D5F61"),
+        sheetBackgroundColor: Color = Color(ibMobileUIHex: "#242424"),
+        sheetDividerColor: Color = Color(ibMobileUIHex: "#3B3B39"),
+        sheetDragIndicatorColor: Color = Color(ibMobileUIHex: "#5D5F61"),
+        buttonColor: Color = Color(ibMobileUIHex: "#5D5F61"),
         buttonSelectedColor: Color = .white,
-        hangupButtonColor: Color = Color(hex: "#C84714"),
-        errorColor: Color = Color(hex: "#FF3B30").opacity(0.9),
+        hangupButtonColor: Color = Color(ibMobileUIHex: "#C84714"),
+        errorColor: Color = Color(ibMobileUIHex: "#FF3B30").opacity(0.9),
         rowActionLabelColor: Color = .white,
         iconMute: Image,
         iconUnMute: Image,
@@ -120,8 +120,8 @@ public struct IBCallUIConfiguration {
 
 public extension Color {
     /// Initialise from a 6- or 8-digit hex string (with or without leading #).
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+    init(ibMobileUIHex: String) {
+        let hex = ibMobileUIHex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
         let a, r, g, b: UInt64
