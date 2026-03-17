@@ -26,6 +26,7 @@ import SwiftUI
 /// let vc = IBCallViewController(state: state, buttons: buttons)
 /// IBPIPKit.show(with: vc)
 /// ```
+@MainActor
 public final class IBCallViewController: UIViewController, IBPIPUsable {
 
     // MARK: - Public properties
@@ -49,7 +50,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
 
     // MARK: - Private
 
-    private let buttonsState = IBButtonsState()
+    private let buttonsState: IBButtonsState
     private let rendererFactory: (AnyObject) -> UIView
     private var hostingController: UIHostingController<IBCallContainerViewWrapper>?
 
@@ -71,6 +72,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
         rendererFactory: @escaping (AnyObject) -> UIView = { _ in UIView() }
     ) {
         self.state = state
+        self.buttonsState = IBButtonsState()
         self.buttonsState.buttons = buttons
         self.configuration = configuration
         self.rendererFactory = rendererFactory
@@ -93,8 +95,6 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
         // Collapse button is only relevant when IBPIPKit is active
         let isPIPActive = IBPIPKit.isActive
         state.isPIP = isPIPActive && (IBPIPKit.state == .pip)
-        // Sync button visibility after reappear
-        _ = isPIPActive
     }
 
     // MARK: - Setup
@@ -168,6 +168,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
 
 // MARK: - IBButtonsState (ObservableObject so button mutations don't recreate the hosting controller)
 
+@MainActor
 private final class IBButtonsState: ObservableObject {
     @Published var buttons: [IBCallButtonModel] = []
 }

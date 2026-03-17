@@ -39,7 +39,8 @@ struct IBVoiceCallView: View {
                     configuration.iconAvatar
                         .resizable()
                         .scaledToFit()
-                        .frame(width: UIScreen.main.bounds.width * 0.45)
+                        // TODO: UIScreen.main is deprecated in iOS 16. Refactor once iOS 15 support is dropped.
+                    .frame(width: UIScreen.main.bounds.width * 0.45)
                         .padding(.top, state.isRemoteMuted ? 4 : 0)
 
                     Spacer()

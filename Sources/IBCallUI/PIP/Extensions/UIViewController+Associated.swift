@@ -16,7 +16,7 @@ extension UIViewController {
         static var ibPipEventDispatcher = "ib_pipEventDispatcher"
     }
 
-    internal var ibPipEventDispatcher: IBPIPKitEventDispatcher? {
+    @MainActor internal var ibPipEventDispatcher: IBPIPKitEventDispatcher? {
         get {
             withUnsafePointer(to: &IBAssociatedKeys.ibPipEventDispatcher) {
                 objc_getAssociatedObject(self, $0) as? IBPIPKitEventDispatcher

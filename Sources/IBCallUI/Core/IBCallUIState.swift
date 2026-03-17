@@ -49,6 +49,7 @@ public enum IBScreenshareState {
 
 /// The observable state that drives the call UI. Consumers update this from their call event
 /// listeners; the SwiftUI views automatically react to changes.
+@MainActor
 public final class IBCallUIState: ObservableObject {
 
     // MARK: - Call metadata

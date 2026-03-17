@@ -11,6 +11,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 public protocol IBPIPUsable {
     var initialState: IBPIPState { get }
     var initialPosition: IBPIPPosition { get }
@@ -36,6 +37,7 @@ public extension IBPIPUsable {
     func didChangePosition(_ position: IBPIPPosition) {}
 }
 
+@MainActor
 public extension IBPIPUsable where Self: UIViewController {
 
     func setNeedsUpdatePIPFrame() {

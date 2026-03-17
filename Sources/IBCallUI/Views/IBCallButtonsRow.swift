@@ -16,7 +16,7 @@ struct IBCallButtonsRow: View {
 
     var body: some View {
         HStack(spacing: 24) {
-            ForEach(0 ..< min(buttons.count, maxVisible), id: \.self) { index in
+            ForEach(Array(buttons.prefix(maxVisible).enumerated()), id: \.element.id) { index, _ in
                 IBCallButton(model: $buttons[index])
             }
         }

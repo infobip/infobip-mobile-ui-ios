@@ -58,6 +58,7 @@ enum IBPIPInternalState {
 
 public typealias IBPIPKitViewController = (UIViewController & IBPIPUsable)
 
+@MainActor
 public final class IBPIPKit {
 
     static public var isActive: Bool { rootViewController != nil }
@@ -93,6 +94,7 @@ public final class IBPIPKit {
         let newWindow = IBPIPKitWindow(windowScene: keyWindow)
         newWindow.backgroundColor = .clear
         newWindow.rootViewController = viewController
+        // .alert level required so PIP floats above system UI during an active call
         newWindow.windowLevel = .alert
         newWindow.makeKeyAndVisible()
 
@@ -157,20 +159,16 @@ public final class IBPIPKit {
 extension IBPIPKit {
     public class func show(with viewController: IBPIPKitViewController) async {
         await withCheckedContinuation { continuation in
-            DispatchQueue.main.async {
-                IBPIPKit.show(with: viewController) {
-                    continuation.resume()
-                }
+            IBPIPKit.show(with: viewController) {
+                continuation.resume()
             }
         }
     }
 
     public class func dismiss(animated: Bool) async {
         await withCheckedContinuation { continuation in
-            DispatchQueue.main.async {
-                IBPIPKit.dismiss(animated: animated) {
-                    continuation.resume()
-                }
+            IBPIPKit.dismiss(animated: animated) {
+                continuation.resume()
             }
         }
     }

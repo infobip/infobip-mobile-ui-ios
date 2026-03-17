@@ -24,6 +24,7 @@ struct IBFloatingVideoWindow: View {
     @State private var offset: CGSize = .zero
     @State private var lastOffset: CGSize = .zero
 
+    // TODO: UIScreen.main is deprecated in iOS 16. Refactor once iOS 15 support is dropped.
     private let windowHeight: CGFloat = UIScreen.main.bounds.height / 5
     private var windowWidth: CGFloat { (windowHeight / 16) * 9 }
 

@@ -38,9 +38,28 @@ public struct IBVideoStreamView: UIViewRepresentable {
         self.rendererFactory = rendererFactory
     }
 
+    public final class Coordinator {
+        var currentTrackID: ObjectIdentifier?
+    }
+
+    public func makeCoordinator() -> Coordinator { Coordinator() }
+
     public func makeUIView(context: Context) -> UIView {
         let container = UIView()
         container.backgroundColor = .black
+        attachRenderer(to: container, context: context)
+        return container
+    }
+
+    public func updateUIView(_ uiView: UIView, context: Context) {
+        let newID = videoTrack.map { ObjectIdentifier($0) }
+        guard newID != context.coordinator.currentTrackID else { return }
+        attachRenderer(to: uiView, context: context)
+    }
+
+    private func attachRenderer(to container: UIView, context: Context) {
+        container.subviews.forEach { $0.removeFromSuperview() }
+        context.coordinator.currentTrackID = videoTrack.map { ObjectIdentifier($0) }
         if let track = videoTrack {
             let rendererView = rendererFactory(track)
             rendererView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,23 +69,6 @@ public struct IBVideoStreamView: UIViewRepresentable {
                 rendererView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
                 rendererView.topAnchor.constraint(equalTo: container.topAnchor),
                 rendererView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-            ])
-        }
-        return container
-    }
-
-    public func updateUIView(_ uiView: UIView, context: Context) {
-        // Remove old renderer and add new one if track changed
-        uiView.subviews.forEach { $0.removeFromSuperview() }
-        if let track = videoTrack {
-            let rendererView = rendererFactory(track)
-            rendererView.translatesAutoresizingMaskIntoConstraints = false
-            uiView.addSubview(rendererView)
-            NSLayoutConstraint.activate([
-                rendererView.leadingAnchor.constraint(equalTo: uiView.leadingAnchor),
-                rendererView.trailingAnchor.constraint(equalTo: uiView.trailingAnchor),
-                rendererView.topAnchor.constraint(equalTo: uiView.topAnchor),
-                rendererView.bottomAnchor.constraint(equalTo: uiView.bottomAnchor)
             ])
         }
     }

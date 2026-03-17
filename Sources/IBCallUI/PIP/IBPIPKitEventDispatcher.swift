@@ -11,6 +11,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 final class IBPIPKitEventDispatcher {
 
     var pipPosition: IBPIPPosition
@@ -93,14 +94,20 @@ final class IBPIPKitEventDispatcher {
         deviceNotificationObserver = NotificationCenter.default.addObserver(
             forName: UIDevice.orientationDidChangeNotification,
             object: nil,
-            queue: nil
+            queue: .main
         ) { [weak self] _ in
-            UIView.animate(withDuration: 0.15) { self?.updateFrame() }
+            // Already on .main queue; re-dispatch to satisfy @MainActor isolation
+            DispatchQueue.main.async {
+                guard let self else { return }
+                UIView.animate(withDuration: 0.15) { self.updateFrame() }
+            }
         }
 
         windowSubviewsObservation = window?.observe(\.subviews, options: [.initial, .new]) { [weak self] window, _ in
-            guard let rootViewController = self?.rootViewController else { return }
-            window.bringSubviewToFront(rootViewController.view)
+            DispatchQueue.main.async {
+                guard let rootViewController = self?.rootViewController else { return }
+                window.bringSubviewToFront(rootViewController.view)
+            }
         }
     }
 
@@ -202,6 +209,7 @@ final class IBPIPKitEventDispatcher {
 
 // MARK: - Setup
 
+@MainActor
 extension IBPIPUsable where Self: UIViewController {
     func setupEventDispatcher() {
         ibPipEventDispatcher = IBPIPKitEventDispatcher(rootViewController: self)
