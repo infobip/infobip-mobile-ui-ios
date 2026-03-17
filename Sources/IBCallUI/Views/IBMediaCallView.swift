@@ -18,19 +18,35 @@ struct IBMediaCallView: View {
     var rendererFactory: (AnyObject) -> UIView
     var onPIPToggle: () -> Void
 
+    @State private var controlsVisible: Bool = true
+
+    private var shouldHideControls: Bool {
+        state.remoteVideoTrack != nil && !state.isPIP
+    }
+
     var body: some View {
         ZStack(alignment: .bottom) {
             // Background: screenshare takes priority; else remote video; else black
             backgroundStream
                 .ignoresSafeArea()
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    guard shouldHideControls else { return }
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        controlsVisible.toggle()
+                    }
+                }
 
             // Header — transparent background so video shows through top safe area
-            VStack(spacing: 0) {
-                header
-                    .background(Color.black.opacity(0.35))
-                Spacer()
+            if !shouldHideControls || controlsVisible {
+                VStack(spacing: 0) {
+                    header
+                        .background(Color.black.opacity(0.35))
+                    Spacer()
+                }
+                .ignoresSafeArea(edges: .top)
+                .transition(.opacity)
             }
-            .ignoresSafeArea(edges: .top)
 
             // Floating video window (local cam, or local+remote when screenshare is bg)
             IBFloatingVideoWindow(
@@ -41,11 +57,12 @@ struct IBMediaCallView: View {
             )
 
             // Bottom sheet — transparent background so video shows through
-            if !state.isPIP {
+            if !state.isPIP && (!shouldHideControls || controlsVisible) {
                 IBCallButtonsSheet(
                     buttons: $buttons,
                     configuration: configuration.withTransparentSheet
                 )
+                .transition(.opacity)
             }
         }
     }

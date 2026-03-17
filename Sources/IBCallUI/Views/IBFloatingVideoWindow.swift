@@ -54,7 +54,7 @@ struct IBFloatingVideoWindow: View {
                     )
                     .position(
                         x: geometry.size.width - contentWidth / 2 - 16,
-                        y: geometry.size.height - windowHeight / 2 - 16
+                        y: geometry.size.height - windowHeight / 2 - 76
                     )
                     .onAppear {
                         // Start in bottom-right corner
