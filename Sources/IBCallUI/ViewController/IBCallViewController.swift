@@ -190,5 +190,6 @@ private struct IBCallContainerViewWrapper: View {
             rendererFactory: rendererFactory,
             onPIPToggle: onPIPToggle
         )
+        .ignoresSafeArea(edges: .bottom)
     }
 }

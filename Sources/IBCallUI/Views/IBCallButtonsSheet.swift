@@ -58,8 +58,9 @@ struct IBCallButtonsSheet: View {
                 overflowList
             }
         }
+        .frame(maxWidth: .infinity)
         .background(configuration.sheetBackgroundColor)
-        .ibCornerRadius(10, corners: [.topLeft, .topRight])
+        .ibCornerRadius(18, corners: [.topLeft, .topRight])
         .contentShape(Rectangle())
         .gesture(
             DragGesture()
