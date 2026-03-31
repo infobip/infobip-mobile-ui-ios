@@ -4,7 +4,7 @@ Reusable SwiftUI UI components for Infobip iOS integrations.
 
 ## Overview
 
-`InfobipMobileUI` provides a fully customisable call screen that both the **Conversations app** (BEPO) and the **Mobile Messaging SDK** (WebRTCUI) can consume. Each consumer keeps its own call logic and drives the shared UI through a simple, protocol-based API.
+`InfobipMobileUI` provides a fully customisable call screen, among other views.
 
 ## Features
 
@@ -15,7 +15,6 @@ Reusable SwiftUI UI components for Infobip iOS integrations.
 - Fully customisable via `CallUIConfiguration` (colours, icons)
 - Configurable buttons via `[CallButtonModel]` — consumers own all tap logic
 - Picture-in-Picture support (custom PIPKit vendored)
-- BEPO-specific buttons (Hold, Transfer, Dialpad) in a dedicated `BEPO/` group
 
 ## Installation
 
