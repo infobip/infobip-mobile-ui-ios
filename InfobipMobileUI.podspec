@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'InfobipMobileUI'
-  s.version          = '1.0.6'
+  s.version          = '1.0.8'
   s.summary          = 'Reusable SwiftUI voice/video call UI components for Infobip iOS integrations.'
   s.description      = <<~DESC
     InfobipMobileUI provides a fully customisable call screen (voice and video) that both
