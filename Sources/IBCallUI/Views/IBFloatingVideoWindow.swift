@@ -27,6 +27,8 @@ struct IBFloatingVideoWindow: View {
     // TODO: UIScreen.main is deprecated in iOS 16. Refactor once iOS 15 support is dropped.
     private let windowHeight: CGFloat = UIScreen.main.bounds.height / 5
     private var windowWidth: CGFloat { (windowHeight / 16) * 9 }
+    private let margin: CGFloat = 16
+    private let yStartingPoint: CGFloat = 80 // above buttons by a constant distance
 
     var body: some View {
         GeometryReader { geometry in
@@ -53,8 +55,8 @@ struct IBFloatingVideoWindow: View {
                             }
                     )
                     .position(
-                        x: geometry.size.width - contentWidth / 2 - 16,
-                        y: geometry.size.height - windowHeight / 2 - 76
+                        x: geometry.size.width - contentWidth / 2 - margin,
+                        y: geometry.size.height - windowHeight / 2 - yStartingPoint
                     )
                     .onAppear {
                         // Start in bottom-right corner
@@ -87,13 +89,15 @@ struct IBFloatingVideoWindow: View {
     }
 
     private func clampedOffset(in size: CGSize) -> CGSize {
-        let halfW = contentWidth / 2
-        let halfH = windowHeight / 2
+        // Anchor point set by .position() — bottom-right with margin
+        let anchorX = size.width - contentWidth / 2 - margin
+        let anchorY = size.height - windowHeight / 2 - yStartingPoint
 
-        let maxX = size.width / 2 - halfW
-        let minX = -(size.width / 2 - halfW)
-        let maxY = size.height / 2 - halfH
-        let minY = -(size.height / 2 - halfH)
+        // Offset bounds so the window stays within screen edges (with margin)
+        let minX = margin + contentWidth / 2 - anchorX
+        let maxX = size.width - margin - contentWidth / 2 - anchorX
+        let minY = margin + windowHeight / 2 - anchorY
+        let maxY = size.height - margin - windowHeight / 2 - anchorY
 
         return CGSize(
             width: min(maxX, max(minX, offset.width)),

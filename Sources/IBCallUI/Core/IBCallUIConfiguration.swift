@@ -52,7 +52,7 @@ public struct IBCallUIConfiguration {
         backgroundColor: Color = Color(ibMobileUIHex: "#242424"),
         foregroundColor: Color = .white,
         textSecondaryColor: Color = Color(ibMobileUIHex: "#5D5F61"),
-        sheetBackgroundColor: Color = Color(ibMobileUIHex: "#1b1b1a"),
+        sheetBackgroundColor: Color = Color(ibMobileUIHex: "#313540"),
         sheetDividerColor: Color = Color(ibMobileUIHex: "#3B3B39"),
         sheetDragIndicatorColor: Color = Color(ibMobileUIHex: "#5D5F61"),
         buttonColor: Color = Color(ibMobileUIHex: "#5D5F61"),
