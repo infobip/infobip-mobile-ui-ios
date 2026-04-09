@@ -24,6 +24,7 @@ public struct IBCallUIConfiguration {
     public var buttonSelectedColor: Color
     public var hangupButtonColor: Color
     public var errorColor: Color
+    public var warningColor: Color
     public var rowActionLabelColor: Color
 
     // MARK: - Icons
@@ -49,7 +50,7 @@ public struct IBCallUIConfiguration {
     // MARK: - Init
 
     public init(
-        backgroundColor: Color = Color(ibMobileUIHex: "#242424"),
+        backgroundColor: Color = Color(ibMobileUIHex: "#23252a"),
         foregroundColor: Color = .white,
         textSecondaryColor: Color = Color(ibMobileUIHex: "#5D5F61"),
         sheetBackgroundColor: Color = Color(ibMobileUIHex: "#313540"),
@@ -58,7 +59,8 @@ public struct IBCallUIConfiguration {
         buttonColor: Color = Color(ibMobileUIHex: "#5D5F61"),
         buttonSelectedColor: Color = .white,
         hangupButtonColor: Color = Color(ibMobileUIHex: "#C84714"),
-        errorColor: Color = Color(ibMobileUIHex: "#FF3B30").opacity(0.9),
+        errorColor: Color = Color(ibMobileUIHex: "#FF3B30"),
+        warningColor: Color = Color(ibMobileUIHex: "#FFD770"),
         rowActionLabelColor: Color = .white,
         iconMute: Image,
         iconUnMute: Image,
@@ -88,6 +90,7 @@ public struct IBCallUIConfiguration {
         self.buttonSelectedColor = buttonSelectedColor
         self.hangupButtonColor = hangupButtonColor
         self.errorColor = errorColor
+        self.warningColor = warningColor
         self.rowActionLabelColor = rowActionLabelColor
         self.iconMute = iconMute
         self.iconUnMute = iconUnMute

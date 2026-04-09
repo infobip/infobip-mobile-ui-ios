@@ -23,13 +23,44 @@ struct IBVoiceCallView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                if !state.isPIP {
-                    Spacer()
+                if !state.isPIP, !state.warningText.isEmpty {
+                    HStack {
+                        Spacer()
+                        state.warningIcon?
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(configuration.warningColor)
+                        Text(state.warningText)
+                            .font(.system(size: 18))
+                            .foregroundColor(configuration.warningColor)
+                            .multilineTextAlignment(.center)
+                            .padding(.leading, 0)
+                        Spacer()
+                    }
+                }
+                
+                Text(state.remoteTitle)
+                    .font(.system(size: !state.isPIP ? 32 : 24, weight: .bold))
+                    .foregroundColor(configuration.foregroundColor)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .padding(.top, !state.isPIP ? 120 : 10)
 
+                Text(state.statusText)
+                    .font(.system(size: !state.isPIP ? 20 : 12))
+                    .foregroundColor(configuration.textSecondaryColor)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 4)
+                    .padding(.bottom, 20)
+                
+                if !state.isPIP {
                     // Remote muted indicator
                     if state.isRemoteMuted {
                         configuration.iconMutedParticipant
                             .resizable()
+                            .renderingMode(.template)
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .foregroundColor(configuration.foregroundColor)
@@ -40,24 +71,11 @@ struct IBVoiceCallView: View {
                         .resizable()
                         .scaledToFit()
                         // TODO: UIScreen.main is deprecated in iOS 16. Refactor once iOS 15 support is dropped.
-                    .frame(width: UIScreen.main.bounds.width * 0.45)
+                        .frame(width: 80)
                         .padding(.top, state.isRemoteMuted ? 4 : 0)
 
                     Spacer()
                 }
-
-                // Name + status
-                Text(state.remoteTitle)
-                    .font(.system(size: 24))
-                    .foregroundColor(configuration.foregroundColor)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-
-                Text(state.statusText)
-                    .font(.subheadline)
-                    .foregroundColor(configuration.textSecondaryColor)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 4)
 
                 if state.isPIP {
                     Spacer(minLength: 8)
@@ -76,7 +94,7 @@ struct IBVoiceCallView: View {
                 // PIP: compact inline row — buttons are interactive, empty areas pass through
                 IBCallButtonsRow(buttons: $buttons)
                     .padding(.bottom, 8)
-                    .background(configuration.sheetBackgroundColor.opacity(0.85))
+                    .background(configuration.sheetBackgroundColor)
             }
 
             // Local video floating window — only instantiated when a track exists
@@ -99,8 +117,9 @@ struct IBVoiceCallView: View {
             Button(action: onPIPToggle) {
                 (state.isPIP ? configuration.iconExpand : configuration.iconCollapse)
                     .resizable()
+                    .renderingMode(.template)
                     .scaledToFit()
-                    .frame(width: 33, height: 33)
+                    .frame(width: 26, height: 26)
                     .foregroundColor(configuration.foregroundColor)
             }
             .frame(minWidth: 44, minHeight: 44)
