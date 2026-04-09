@@ -60,7 +60,7 @@ struct IBMediaCallView: View {
             if !state.isPIP && (!shouldHideControls || controlsVisible) {
                 IBCallButtonsSheet(
                     buttons: $buttons,
-                    configuration: configuration.withTransparentSheet
+                    configuration: configuration.withTranslucentSheet
                 )
                 .transition(.opacity)
             }

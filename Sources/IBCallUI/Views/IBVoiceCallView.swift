@@ -99,7 +99,7 @@ struct IBVoiceCallView: View {
 
             // Local video floating window — only instantiated when a track exists
             // so the UIKit renderer view is fully torn down when camera stops
-            if let factory = rendererFactory, state.localVideoTrack != nil {
+            if let factory = rendererFactory, state.localVideoTrack != nil, !state.isPIP {
                 IBFloatingVideoWindow(
                     localVideoTrack: state.localVideoTrack,
                     secondaryVideoTrack: nil,

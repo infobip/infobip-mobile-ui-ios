@@ -112,9 +112,9 @@ public struct IBCallUIConfiguration {
     }
 
     /// Returns a copy with a fully transparent sheet background (used in video/screenshare layout).
-    var withTransparentSheet: IBCallUIConfiguration {
+    var withTranslucentSheet: IBCallUIConfiguration {
         var copy = self
-        copy.sheetBackgroundColor = .clear
+        copy.sheetBackgroundColor = copy.sheetBackgroundColor.opacity(0.4)
         return copy
     }
 }
