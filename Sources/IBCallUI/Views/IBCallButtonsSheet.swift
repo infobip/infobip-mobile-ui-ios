@@ -57,6 +57,9 @@ struct IBCallButtonsSheet: View {
 
                 overflowList
             }
+
+            // Extra bottom spacing to keep buttons above the safe-area gesture zone
+            Spacer().frame(height: 16)
         }
         .frame(maxWidth: .infinity)
         .background(configuration.sheetBackgroundColor)
