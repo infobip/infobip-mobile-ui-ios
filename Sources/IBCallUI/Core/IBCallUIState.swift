@@ -60,6 +60,8 @@ public final class IBCallUIState: ObservableObject {
     /// Human-readable status: elapsed duration (e.g. "00:42") while established,
     /// or a localised string like "Calling…" before connection.
     @Published public var statusText: String = ""
+    @Published public var warningText: String = ""
+    @Published public var warningIcon: Image?
 
     // MARK: - Participant state
 

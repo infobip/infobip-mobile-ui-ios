@@ -26,7 +26,7 @@ struct IBCallContainerView: View {
 
     @ViewBuilder
     private var mainView: some View {
-        if state.isVideoActive {
+        if state.isVideoActive, !state.isPIP { // we don't want streaming while on PIP, it is too intrusive and glitchy
             IBMediaCallView(
                 state: state,
                 buttons: $buttons,

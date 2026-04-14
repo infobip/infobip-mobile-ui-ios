@@ -15,29 +15,28 @@ import SwiftUI
 public struct IBCallButtonModel: Identifiable {
     public let id: String
     public var icon: Image
+    public var iconColor: Color
+    public var iconSize: CGFloat
     public var selectedIcon: Image?
-    /// Short label shown below the button in the overflow list view.
     public var label: String?
     public var backgroundColor: Color
     public var selectedBackgroundColor: Color?
-    /// Icon foreground color when unselected. Defaults to `.white`.
-    public var iconColor: Color
-    /// Icon foreground color when selected. Defaults to `.white`.
+    public var circleBorderColor: Color?
     public var selectedIconColor: Color?
     public var isSelected: Bool
     public var isEnabled: Bool
-    /// When true the button is excluded from the visible array passed to the view.
     public var isHidden: Bool
-    /// Called when the button is tapped. Consumers own all business logic.
     public var onTap: () -> Void
 
     public init(
         id: String,
         icon: Image,
+        iconSize: CGFloat = 22,
         selectedIcon: Image? = nil,
         label: String? = nil,
         backgroundColor: Color,
         selectedBackgroundColor: Color? = nil,
+        circleBorderColor: Color? = nil,
         iconColor: Color = .white,
         selectedIconColor: Color? = nil,
         isSelected: Bool = false,
@@ -47,10 +46,12 @@ public struct IBCallButtonModel: Identifiable {
     ) {
         self.id = id
         self.icon = icon
+        self.iconSize = iconSize
         self.selectedIcon = selectedIcon
         self.label = label
         self.backgroundColor = backgroundColor
         self.selectedBackgroundColor = selectedBackgroundColor
+        self.circleBorderColor = circleBorderColor
         self.iconColor = iconColor
         self.selectedIconColor = selectedIconColor
         self.isSelected = isSelected

@@ -32,10 +32,8 @@ struct IBCallButtonsSheet: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Drag indicator
             dragIndicator
 
-            // Visible row — always shown
             IBCallButtonsRow(
                 buttons: Binding(
                     get: { Array(buttons.prefix(maxVisibleInRow)) },
@@ -53,7 +51,7 @@ struct IBCallButtonsSheet: View {
             if !overflowButtons.isEmpty && isExpanded {
                 Divider()
                     .background(configuration.sheetDividerColor)
-                    .padding(.horizontal, 51)
+                    .padding(.horizontal, 50)
 
                 overflowList
             }
@@ -101,21 +99,19 @@ struct IBCallButtonsSheet: View {
                 )
             }
         }
-        .padding(.horizontal, 51)
+        .padding(.horizontal, 25)
         .padding(.vertical, 4)
         // Cap height so the sheet never grows beyond ~4 rows
-        .frame(maxHeight: CGFloat(overflowButtons.count) * 46)
+        .frame(maxHeight: CGFloat(overflowButtons.count) * 56)
     }
 
     private func overflowRow(button: IBCallButtonModel, bindingIndex: Int) -> some View {
         let model = buttons[bindingIndex]
         let isSelected = model.isSelected
         let icon = isSelected ? (model.selectedIcon ?? model.icon) : model.icon
-        let circleBg = isSelected
-            ? (model.selectedBackgroundColor ?? model.backgroundColor)
-            : model.backgroundColor
+        let circleBg = isSelected ? (model.selectedBackgroundColor ?? model.backgroundColor) : .clear
         let iconFg = isSelected ? (model.selectedIconColor ?? model.iconColor) : model.iconColor
-        let circleSize: CGFloat = 30
+        let circleSize: CGFloat = 38
 
         return Button(action: {
             buttons[bindingIndex].onTap()
@@ -126,6 +122,7 @@ struct IBCallButtonsSheet: View {
                         .fill(circleBg)
                         .frame(width: circleSize, height: circleSize)
                     icon
+                        .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
                         .padding(7)
@@ -138,7 +135,7 @@ struct IBCallButtonsSheet: View {
                     .font(.body)
                 Spacer()
             }
-            .frame(height: 38)
+            .frame(height: 56)
         }
         .disabled(!model.isEnabled)
         .opacity(model.isEnabled ? 1.0 : 0.4)

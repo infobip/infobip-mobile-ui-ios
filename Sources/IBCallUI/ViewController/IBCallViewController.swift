@@ -40,10 +40,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
     public var initialState: IBPIPState = .full
 
     public var pipSize: CGSize {
-        if !state.isVideoActive {
-            return CGSize(width: 280, height: 180)
-        }
-        return CGSize(width: 280, height: 300)
+        return CGSize(width: 280, height: 180)
     }
 
     public override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }

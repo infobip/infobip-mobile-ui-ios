@@ -24,8 +24,14 @@ struct IBCallButton: View {
             ZStack {
                 Circle()
                     .fill(bg)
+                    .overlay(
+                         Circle()
+                            .stroke(model.circleBorderColor ?? .clear, lineWidth: 1)
+                     )
                 icon
+                    .renderingMode(.template)
                     .resizable()
+                    .frame(width: model.iconSize, height: model.iconSize)
                     .scaledToFit()
                     .padding(12)
                     .foregroundColor(fg)
