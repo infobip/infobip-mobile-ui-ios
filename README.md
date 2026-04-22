@@ -26,7 +26,7 @@ Reusable SwiftUI UI components for Infobip iOS integrations.
 
 Then add `InfobipMobileUI` to your target's dependencies.
 
-### CocoaPods *(coming soon)*
+### CocoaPods
 
 ```ruby
 pod 'InfobipMobileUI'
