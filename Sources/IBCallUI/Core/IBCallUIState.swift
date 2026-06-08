@@ -11,30 +11,38 @@ import Combine
 
 // MARK: - Supporting types
 
-/// A participant in a multi-party call, as seen by the coordination layer.
-/// Defined here (in the UI package) so `IBCallUIState` can carry participant state
-/// without a dependency on the app layer.
+/// The mutually exclusive display state for a single call participant.
+/// The app layer maps its own business state to one of these cases before
+/// pushing to `IBCallUIState`; the UI package itself is stateless.
+public enum IBCallParticipantDisplayState: Equatable {
+    /// Outbound invite sent, waiting for the participant to answer.
+    case ringing
+    /// Participant is connected and in the conversation.
+    case active
+    /// Participant is active but currently speaking.
+    case talking
+    /// Participant's leg is on hold (muted from the conference).
+    case onHold
+    /// Temporarily disconnected; reconnect in progress.
+    case reconnecting
+}
+
+/// A display-only snapshot of a call participant.
+/// Carries only what the UI needs to render — no business logic.
 public struct IBCallParticipant: Equatable, Identifiable {
     public enum Role: Equatable { case agent, customer }
 
-    public let id: String          // identity string (unique per participant)
+    public let id: String
     public let displayName: String?
     public let role: Role
-    public var isOnHold: Bool
-    public var isTalking: Bool
-    public var isReconnecting: Bool
-    public var isLoading: Bool     // per-participant spinner (e.g. while ringing)
+    public let displayState: IBCallParticipantDisplayState
 
     public init(id: String, displayName: String?, role: Role,
-                isOnHold: Bool = false, isTalking: Bool = false,
-                isReconnecting: Bool = false, isLoading: Bool = false) {
+                displayState: IBCallParticipantDisplayState) {
         self.id = id
         self.displayName = displayName
         self.role = role
-        self.isOnHold = isOnHold
-        self.isTalking = isTalking
-        self.isReconnecting = isReconnecting
-        self.isLoading = isLoading
+        self.displayState = displayState
     }
 }
 
