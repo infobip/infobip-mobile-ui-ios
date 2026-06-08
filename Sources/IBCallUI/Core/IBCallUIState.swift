@@ -9,6 +9,43 @@
 import SwiftUI
 import Combine
 
+// MARK: - Supporting types
+
+/// The mutually exclusive display state for a single call participant.
+/// The app layer maps its own business state to one of these cases before
+/// pushing to `IBCallUIState`; the UI package itself is stateless.
+public enum IBCallParticipantDisplayState: Equatable {
+    /// Outbound invite sent, waiting for the participant to answer.
+    case ringing
+    /// Participant is connected and in the conversation.
+    case active
+    /// Participant is active but currently speaking.
+    case talking
+    /// Participant's leg is on hold (muted from the conference).
+    case onHold
+    /// Temporarily disconnected; reconnect in progress.
+    case reconnecting
+}
+
+/// A display-only snapshot of a call participant.
+/// Carries only what the UI needs to render — no business logic.
+public struct IBCallParticipant: Equatable, Identifiable {
+    public enum Role: Equatable { case agent, customer }
+
+    public let id: String
+    public let displayName: String?
+    public let role: Role
+    public let displayState: IBCallParticipantDisplayState
+
+    public init(id: String, displayName: String?, role: Role,
+                displayState: IBCallParticipantDisplayState) {
+        self.id = id
+        self.displayName = displayName
+        self.role = role
+        self.displayState = displayState
+    }
+}
+
 // MARK: - Supporting enums
 
 public enum IBCallPhase: Equatable {
@@ -66,6 +103,22 @@ public final class IBCallUIState: ObservableObject {
     // MARK: - Participant state
 
     @Published public var isRemoteMuted: Bool = false
+
+    // MARK: - Multi-party coordination state
+
+    /// All participants in the current call (empty for plain 1-on-1 calls).
+    /// The coordination layer populates this from state-machine effects; UI observes it.
+    @Published public var callParticipants: [IBCallParticipant] = []
+
+    /// `true` while waiting for a multi-party operation to complete (global spinner).
+    @Published public var isMultiPartyLoading: Bool = false
+
+    /// Identity or display value of the specific participant that is currently loading
+    /// (e.g. a callee that is ringing). `nil` means the spinner is global.
+    @Published public var loadingCalleeValue: String? = nil
+
+    /// `true` when the customer leg has been placed on hold during an advising session.
+    @Published public var isCustomerOnHold: Bool = false
 
     // MARK: - Video tracks
     // Typed as AnyObject to avoid a compile-time dependency on InfobipRTC.
