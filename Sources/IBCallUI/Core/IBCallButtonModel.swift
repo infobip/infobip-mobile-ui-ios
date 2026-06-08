@@ -71,7 +71,7 @@ public extension IBCallButtonModel {
         onTap: @escaping () -> Void
     ) -> IBCallButtonModel {
         IBCallButtonModel(
-            id: "hangup",
+            id: IBCallButtonsIds.hangup,
             icon: configuration.iconEndCall,
             backgroundColor: configuration.hangupButtonColor,
             onTap: onTap
@@ -85,7 +85,7 @@ public extension IBCallButtonModel {
         onTap: @escaping () -> Void
     ) -> IBCallButtonModel {
         IBCallButtonModel(
-            id: "microphone",
+            id: IBCallButtonsIds.microphone,
             icon: configuration.iconMute,
             selectedIcon: configuration.iconUnMute,
             label: "Microphone",
@@ -103,7 +103,7 @@ public extension IBCallButtonModel {
         onTap: @escaping () -> Void
     ) -> IBCallButtonModel {
         IBCallButtonModel(
-            id: "video",
+            id: IBCallButtonsIds.video,
             icon: configuration.iconVideoOff,
             selectedIcon: configuration.iconVideo,
             label: "Video",
@@ -121,7 +121,7 @@ public extension IBCallButtonModel {
         onTap: @escaping () -> Void
     ) -> IBCallButtonModel {
         IBCallButtonModel(
-            id: "screenshare",
+            id: IBCallButtonsIds.screenshare,
             icon: configuration.iconScreenShareOn,
             selectedIcon: configuration.iconScreenShareOff,
             label: "Screensharing",
@@ -139,7 +139,7 @@ public extension IBCallButtonModel {
         onTap: @escaping () -> Void
     ) -> IBCallButtonModel {
         IBCallButtonModel(
-            id: "speakerphone",
+            id: IBCallButtonsIds.speakerphone,
             icon: configuration.iconSpeakerOff,
             selectedIcon: configuration.iconSpeaker,
             label: "Speakerphone",
@@ -156,7 +156,7 @@ public extension IBCallButtonModel {
         onTap: @escaping () -> Void
     ) -> IBCallButtonModel {
         IBCallButtonModel(
-            id: "flipCamera",
+            id: IBCallButtonsIds.flipCamera,
             icon: configuration.iconFlipCamera,
             label: "Flip Camera",
             backgroundColor: configuration.buttonColor,

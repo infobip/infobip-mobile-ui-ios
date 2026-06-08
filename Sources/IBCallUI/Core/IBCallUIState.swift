@@ -9,6 +9,35 @@
 import SwiftUI
 import Combine
 
+// MARK: - Supporting types
+
+/// A participant in a multi-party call, as seen by the coordination layer.
+/// Defined here (in the UI package) so `IBCallUIState` can carry participant state
+/// without a dependency on the app layer.
+public struct IBCallParticipant: Equatable, Identifiable {
+    public enum Role: Equatable { case agent, customer }
+
+    public let id: String          // identity string (unique per participant)
+    public let displayName: String?
+    public let role: Role
+    public var isOnHold: Bool
+    public var isTalking: Bool
+    public var isReconnecting: Bool
+    public var isLoading: Bool     // per-participant spinner (e.g. while ringing)
+
+    public init(id: String, displayName: String?, role: Role,
+                isOnHold: Bool = false, isTalking: Bool = false,
+                isReconnecting: Bool = false, isLoading: Bool = false) {
+        self.id = id
+        self.displayName = displayName
+        self.role = role
+        self.isOnHold = isOnHold
+        self.isTalking = isTalking
+        self.isReconnecting = isReconnecting
+        self.isLoading = isLoading
+    }
+}
+
 // MARK: - Supporting enums
 
 public enum IBCallPhase: Equatable {
@@ -66,6 +95,22 @@ public final class IBCallUIState: ObservableObject {
     // MARK: - Participant state
 
     @Published public var isRemoteMuted: Bool = false
+
+    // MARK: - Multi-party coordination state
+
+    /// All participants in the current call (empty for plain 1-on-1 calls).
+    /// The coordination layer populates this from state-machine effects; UI observes it.
+    @Published public var callParticipants: [IBCallParticipant] = []
+
+    /// `true` while waiting for a multi-party operation to complete (global spinner).
+    @Published public var isMultiPartyLoading: Bool = false
+
+    /// Identity or display value of the specific participant that is currently loading
+    /// (e.g. a callee that is ringing). `nil` means the spinner is global.
+    @Published public var loadingCalleeValue: String? = nil
+
+    /// `true` when the customer leg has been placed on hold during an advising session.
+    @Published public var isCustomerOnHold: Bool = false
 
     // MARK: - Video tracks
     // Typed as AnyObject to avoid a compile-time dependency on InfobipRTC.
