@@ -1,12 +1,13 @@
 #!/bin/bash
 set -e
 
-git commit -m "Version ${CUSTOM_VERSION_NUMBER} - ${RELEASE_NOTES}"
+# Jenkins checks out a detached SHA; re-attach to the named branch first
+git checkout "${BRANCH_NAME_TO_BUILD}"
+
 git tag -a "${CUSTOM_VERSION_NUMBER}" -m "Version ${CUSTOM_VERSION_NUMBER} - ${RELEASE_NOTES}"
 
-GITHUB_REMOTE="https://${GITHUB_USER}:${GITHUB_API_TOKEN}@github.com/infobip/infobip-mobile-ui-ios.git"
-git push "${GITHUB_REMOTE}" "${BRANCH_NAME_TO_BUILD}"
-git push "${GITHUB_REMOTE}" "${CUSTOM_VERSION_NUMBER}"
+git push origin1 "${BRANCH_NAME_TO_BUILD}"  # push the branch HEAD via the SSH remote Jenkins pre-configures
+git push origin1 "${CUSTOM_VERSION_NUMBER}"  # push the tag (git does not push tags by default)
 
 # Create GitHub Release — RELEASE_NOTES piped through Python to produce valid JSON
 PAYLOAD=$(python3 -c "
