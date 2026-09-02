@@ -89,8 +89,8 @@ public extension IBCallButtonModel {
             icon: configuration.iconMute,
             selectedIcon: configuration.iconUnMute,
             label: "Microphone",
-            backgroundColor: configuration.buttonSelectedColor,
-            selectedBackgroundColor: configuration.buttonColor,
+            backgroundColor: configuration.buttonColor,
+            selectedBackgroundColor: configuration.buttonSelectedColor,
             isSelected: isSelected,
             onTap: onTap
         )
