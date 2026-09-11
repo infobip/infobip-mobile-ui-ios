@@ -15,7 +15,7 @@ struct IBMediaCallView: View {
     @ObservedObject var state: IBCallUIState
     @Binding var buttons: [IBCallButtonModel]
     var configuration: IBCallUIConfiguration
-    var rendererFactory: (AnyObject) -> UIView
+    var rendererFactory: IBVideoRendererFactory
     var onPIPToggle: () -> Void
 
     @State private var controlsVisible: Bool = true
@@ -73,10 +73,10 @@ struct IBMediaCallView: View {
     private var backgroundStream: some View {
         switch state.screenshare {
         case .local(let track), .remote(let track):
-            IBVideoStreamView(videoTrack: track, rendererFactory: rendererFactory)
+            IBVideoStreamView(videoTrack: track, contentMode: .fit, rendererFactory: rendererFactory)
         case .none:
             if let remoteTrack = state.remoteVideoTrack {
-                IBVideoStreamView(videoTrack: remoteTrack, rendererFactory: rendererFactory)
+                IBVideoStreamView(videoTrack: remoteTrack, contentMode: .fill, rendererFactory: rendererFactory)
             } else {
                 configuration.backgroundColor
             }

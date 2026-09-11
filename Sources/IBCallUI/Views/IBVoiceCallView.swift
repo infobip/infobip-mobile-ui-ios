@@ -14,7 +14,7 @@ struct IBVoiceCallView: View {
     @ObservedObject var state: IBCallUIState
     @Binding var buttons: [IBCallButtonModel]
     var configuration: IBCallUIConfiguration
-    var rendererFactory: ((AnyObject) -> UIView)?
+    var rendererFactory: IBVideoRendererFactory?
     var onPIPToggle: () -> Void
 
     var body: some View {

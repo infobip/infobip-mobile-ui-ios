@@ -17,7 +17,7 @@ struct IBFloatingVideoWindow: View {
     /// Secondary video track (remote camera when screenshare fills the background).
     var secondaryVideoTrack: AnyObject?
     /// Factory that creates a UIView renderer and attaches the given track to it.
-    var rendererFactory: (AnyObject) -> UIView
+    var rendererFactory: IBVideoRendererFactory
     /// Whether the parent is in PIP mode (hides the floating window in PIP).
     var isPIP: Bool
 
@@ -78,13 +78,13 @@ struct IBFloatingVideoWindow: View {
     private var floatingContent: some View {
         if let local = localVideoTrack, let secondary = secondaryVideoTrack {
             HStack(spacing: 2) {
-                IBVideoStreamView(videoTrack: local, rendererFactory: rendererFactory)
-                IBVideoStreamView(videoTrack: secondary, rendererFactory: rendererFactory)
+                IBVideoStreamView(videoTrack: local, contentMode: .fill, rendererFactory: rendererFactory)
+                IBVideoStreamView(videoTrack: secondary, contentMode: .fill, rendererFactory: rendererFactory)
             }
         } else if let local = localVideoTrack {
-            IBVideoStreamView(videoTrack: local, rendererFactory: rendererFactory)
+            IBVideoStreamView(videoTrack: local, contentMode: .fill, rendererFactory: rendererFactory)
         } else if let secondary = secondaryVideoTrack {
-            IBVideoStreamView(videoTrack: secondary, rendererFactory: rendererFactory)
+            IBVideoStreamView(videoTrack: secondary, contentMode: .fill, rendererFactory: rendererFactory)
         }
     }
 

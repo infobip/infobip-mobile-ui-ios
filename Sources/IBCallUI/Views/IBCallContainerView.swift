@@ -17,7 +17,7 @@ struct IBCallContainerView: View {
     @Binding var buttons: [IBCallButtonModel]
     var configuration: IBCallUIConfiguration
     /// Factory injected by the consumer to create InfobipRTC video renderer views.
-    var rendererFactory: (AnyObject) -> UIView
+    var rendererFactory: IBVideoRendererFactory
     var onPIPToggle: () -> Void
 
     var body: some View {

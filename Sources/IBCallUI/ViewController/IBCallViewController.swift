@@ -48,7 +48,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
     // MARK: - Private
 
     private let buttonsState: IBButtonsState
-    private let rendererFactory: (AnyObject) -> UIView
+    private let rendererFactory: IBVideoRendererFactory
     private var hostingController: UIHostingController<IBCallContainerViewWrapper>?
 
     /// Optional: constraint used to shift the call view down when an overlay
@@ -61,12 +61,13 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
     ///   - state: The observable state that drives the UI. Update this from your call event listeners.
     ///   - buttons: Ordered list of call action buttons. The first ≤4 are always visible; the rest appear in the expandable overflow list.
     ///   - configuration: Visual theme including all icon images.
-    ///   - rendererFactory: Closure that creates an InfobipRTC video renderer `UIView` for a given track. Required for video calls. Pass a no-op for audio-only applications.
+    ///   - rendererFactory: Closure that creates an InfobipRTC video renderer scaled for the requested `IBVideoContentMode`.
+    ///     for video calls. Pass a no-op for audio-only applications.
     public init(
         state: IBCallUIState,
         buttons: [IBCallButtonModel],
         configuration: IBCallUIConfiguration,
-        rendererFactory: @escaping (AnyObject) -> UIView
+        rendererFactory: @escaping IBVideoRendererFactory
     ) {
         self.state = state
         self.buttonsState = IBButtonsState()
@@ -176,7 +177,7 @@ private struct IBCallContainerViewWrapper: View {
     @ObservedObject var state: IBCallUIState
     @ObservedObject var buttonsState: IBButtonsState
     var configuration: IBCallUIConfiguration
-    var rendererFactory: (AnyObject) -> UIView
+    var rendererFactory: IBVideoRendererFactory
     var onPIPToggle: () -> Void
 
     var body: some View {
