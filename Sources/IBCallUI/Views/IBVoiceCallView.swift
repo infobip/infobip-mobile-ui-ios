@@ -93,6 +93,7 @@ struct IBVoiceCallView: View {
             } else {
                 // PIP: compact inline row — buttons are interactive, empty areas pass through
                 IBCallButtonsRow(buttons: $buttons)
+                    .padding(.top, 12)
                     .padding(.bottom, 8)
                     .background(configuration.sheetBackgroundColor)
             }

@@ -40,7 +40,7 @@ public final class IBCallViewController: UIViewController, IBPIPUsable {
     public var initialState: IBPIPState = .full
 
     public var pipSize: CGSize {
-        return CGSize(width: 280, height: 180)
+        return CGSize(width: 280, height: 195)
     }
 
     public override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }

@@ -54,7 +54,7 @@ state.statusText = "00:42"
 state.remoteTitle = "John Doe"
 ```
 
-### BEPO (Conversations App)
+### BEPO definitions
 
 ```swift
 import InfobipMobileUI
